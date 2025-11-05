@@ -75,7 +75,9 @@ os.makedirs('output', exist_ok=True)
 # TODO: Calculate total insurance payments by facility
 # TODO: Find the facility with highest total encounter charges
 
-# TODO: Save results as 'output/q1_groupby_analysis.csv'
+# TODO: Create a summary dataframe with one row per facility showing:
+#       facility_name, total_providers, avg_years_experience, total_service_charge, total_insurance_paid
+# TODO: Save the summary dataframe as 'output/q1_groupby_analysis.csv'
 ```
 
 ### Part 1.3: Transform Operations
@@ -118,7 +120,8 @@ def provider_stats(group):
     pass
 
 # TODO: Apply custom function to each facility
-facility_provider_stats = merged_df.groupby('facility_name').apply(provider_stats)
+# Note: Add include_groups=False to avoid pandas FutureWarning about groupby columns
+facility_provider_stats = merged_df.groupby('facility_name').apply(provider_stats, include_groups=False)
 
 # TODO: Create function to find top providers in each facility
 def top_providers(group, n=2):
@@ -166,6 +169,8 @@ top_providers_by_facility = merged_df.groupby('facility_name').apply(
 # TODO: Add totals (margins) to pivot table
 # TODO: Handle missing values with fill_value
 
+# Tip: When saving a pivot table to CSV, the index (row labels) is preserved by default.
+#      This is usually desired - when reading back, use index_col=0 to restore the index.
 # TODO: Save results as 'output/q3_pivot_analysis.csv'
 ```
 
@@ -174,9 +179,10 @@ top_providers_by_facility = merged_df.groupby('facility_name').apply(
 **TODO: Create cross-tabulations for categorical analysis**
 
 ```python
-# TODO: Create crosstab of facility type vs region
-# TODO: Create crosstab with margins
-# TODO: Create multi-dimensional crosstab (facility type × encounter type × region)
+# TODO: Create crosstab of facility type vs region with counts
+# TODO: Create crosstab with margins (row and column totals)
+# TODO: Create multi-dimensional crosstab showing facility type × encounter type × region combinations
+#       (Hint: use pd.crosstab with multiple index/column parameters, or create manually from the data)
 
 # TODO: Analyze the cross-tabulation results
 # TODO: Save results as 'output/q3_crosstab_analysis.csv'

@@ -63,18 +63,22 @@ facility_names = [
 ]
 regions = ["North", "South", "East", "West"]
 
+# Generate established dates using proper date arithmetic
+base_date = datetime(1980, 1, 1)
+established_dates = []
+for _ in range(len(facility_names)):
+    # Random days between 0 and 44 years
+    random_days = np.random.randint(0, 365 * 44)
+    established_date = base_date + timedelta(days=random_days)
+    established_dates.append(established_date.date().isoformat())
+
 facilities = pd.DataFrame({
     "facility_id": [f"FAC{i:03d}" for i in range(1, len(facility_names) + 1)],
     "facility_name": facility_names,
     "facility_type": np.random.choice(facility_types, len(facility_names)),
     "region": np.random.choice(regions, len(facility_names)),
     "beds": np.random.randint(0, 500, len(facility_names)),
-    "established_date": [
-        (datetime(1980, 1, 1) + timedelta(days=int(np.random.uniform(0, 365 * 44))))
-        .date()
-        .isoformat()
-        for _ in range(len(facility_names))
-    ],
+    "established_date": established_dates,
 })
 
 # Healthcare providers (doctors, nurses, etc.)

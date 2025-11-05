@@ -18,18 +18,26 @@ OUTPUT_DIR = BASE_DIR / "output"
 
 class TestQuestion1:
     """Test Question 1: Basic GroupBy Operations"""
-    
+
     def test_q1_groupby_analysis_exists(self):
         """Test that q1_groupby_analysis.csv exists"""
         filepath = OUTPUT_DIR / "q1_groupby_analysis.csv"
         assert filepath.exists(), f"q1_groupby_analysis.csv not found at {filepath}"
-    
+
     def test_q1_groupby_analysis_readable(self):
         """Test that q1_groupby_analysis.csv is readable and has data"""
         filepath = OUTPUT_DIR / "q1_groupby_analysis.csv"
         df = pd.read_csv(filepath)
         assert len(df) > 0, "q1_groupby_analysis.csv is empty"
         assert 'facility_name' in df.columns, "q1_groupby_analysis.csv missing 'facility_name' column"
+
+    def test_q1_groupby_analysis_has_numeric_columns(self):
+        """Test that q1_groupby_analysis.csv has expected numeric aggregations"""
+        filepath = OUTPUT_DIR / "q1_groupby_analysis.csv"
+        df = pd.read_csv(filepath)
+        # Expect columns like: facility_name, total_providers, avg_years_experience, total_service_charge, total_insurance_paid
+        numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
+        assert len(numeric_cols) > 0, "q1_groupby_analysis.csv has no numeric columns (aggregations expected)"
     
     def test_q1_aggregation_report_exists(self):
         """Test that q1_aggregation_report.txt exists"""
@@ -57,6 +65,13 @@ class TestQuestion2:
         filepath = OUTPUT_DIR / "q2_filter_analysis.csv"
         df = pd.read_csv(filepath)
         assert len(df) > 0, "q2_filter_analysis.csv is empty"
+
+    def test_q2_filter_analysis_has_numeric_columns(self):
+        """Test that q2_filter_analysis.csv has numeric data"""
+        filepath = OUTPUT_DIR / "q2_filter_analysis.csv"
+        df = pd.read_csv(filepath)
+        numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
+        assert len(numeric_cols) > 0, "q2_filter_analysis.csv has no numeric columns"
     
     def test_q2_hierarchical_analysis_exists(self):
         """Test that q2_hierarchical_analysis.csv exists"""
@@ -71,6 +86,13 @@ class TestQuestion2:
         # Should have facility_type and region columns for hierarchical grouping
         assert 'facility_type' in df.columns or 'region' in df.columns, \
             "q2_hierarchical_analysis.csv missing expected hierarchical columns"
+
+    def test_q2_hierarchical_analysis_has_numeric_columns(self):
+        """Test that q2_hierarchical_analysis.csv has numeric aggregations"""
+        filepath = OUTPUT_DIR / "q2_hierarchical_analysis.csv"
+        df = pd.read_csv(filepath)
+        numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
+        assert len(numeric_cols) > 0, "q2_hierarchical_analysis.csv has no numeric columns"
     
     def test_q2_performance_report_exists(self):
         """Test that q2_performance_report.txt exists"""
@@ -100,6 +122,13 @@ class TestQuestion3:
         df = pd.read_csv(filepath, index_col=0)  # Pivot tables often have index
         assert len(df) > 0, "q3_pivot_analysis.csv is empty"
         assert len(df.columns) > 0, "q3_pivot_analysis.csv has no columns"
+
+    def test_q3_pivot_analysis_has_numeric_columns(self):
+        """Test that q3_pivot_analysis.csv has numeric pivot values"""
+        filepath = OUTPUT_DIR / "q3_pivot_analysis.csv"
+        df = pd.read_csv(filepath, index_col=0)
+        numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
+        assert len(numeric_cols) > 0, "q3_pivot_analysis.csv has no numeric columns (pivot values expected)"
     
     def test_q3_crosstab_analysis_exists(self):
         """Test that q3_crosstab_analysis.csv exists"""
@@ -112,6 +141,13 @@ class TestQuestion3:
         df = pd.read_csv(filepath, index_col=0)  # Crosstab often has index
         assert len(df) > 0, "q3_crosstab_analysis.csv is empty"
         assert len(df.columns) > 0, "q3_crosstab_analysis.csv has no columns"
+
+    def test_q3_crosstab_analysis_has_numeric_columns(self):
+        """Test that q3_crosstab_analysis.csv has numeric frequency counts"""
+        filepath = OUTPUT_DIR / "q3_crosstab_analysis.csv"
+        df = pd.read_csv(filepath, index_col=0)
+        numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
+        assert len(numeric_cols) > 0, "q3_crosstab_analysis.csv has no numeric columns (frequency counts expected)"
     
     def test_q3_pivot_visualization_exists(self):
         """Test that q3_pivot_visualization.png exists"""

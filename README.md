@@ -1,49 +1,5 @@
 # Assignment 8: Data Aggregation and Group Operations
 
-**Deliverable:**
-
-- Pass all auto-grading tests by generating the required output files from `assignment.ipynb`/`assignment.md`
-
-## Environment Setup
-
-### Create Virtual Environment
-
-Create a virtual environment for this assignment:
-
-```bash
-# Create venv
-python3 -m venv .venv
-
-# Activate (Linux/Mac)
-source .venv/bin/activate
-
-# Activate (Windows)
-.venv\Scripts\activate
-```
-
-### Install Requirements
-
-You have two options to install the required packages:
-
-**Option 1: Using pip in terminal**
-```bash
-pip install -r requirements.txt
-```
-
-**Option 2: Using %pip magic in Jupyter**
-
-You can install packages directly from a Jupyter notebook cell using the `%pip` magic command:
-
-```python
-# Install single package
-%pip install pandas
-
-# Install from requirements.txt
-%pip install -r requirements.txt
-```
-
-**Important:** Make sure your Jupyter notebook is using the same virtual environment as your kernel. Select the `.venv` kernel in Jupyter's kernel menu.
-
 ## Generate the Dataset (Provided)
 
 Run the data generator notebook to create your dataset:
